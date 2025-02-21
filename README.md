@@ -1,2 +1,1 @@
-# postmans_backend
-gonna contain practice of go lang language and the project 
+well this file gonna contain the parctice of golang language and the work on the project
