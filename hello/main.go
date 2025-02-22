@@ -2,19 +2,31 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 const b string = "suii"
 
 func main() {
-	fmt.Println(b)
-	const n = 500000000
+	i := 10
+	for i >= 3 {
+		fmt.Println(i)
+		i = i - 1
+	}
+	for k := 0; k != 5; k++ {
+		fmt.Println(k)
+	}
+	for i := range 3 {
+		fmt.Println("range", i)
+	}
+	for {
+		fmt.Println("loop")
+		break
+	}
 
-	const d = 3e20 / n
-	fmt.Println(d)
-	fmt.Println(int64(d))
-
-	fmt.Println(math.Sin(n))
-
+	for n := range 6 {
+		if n%2 == 0 {
+			continue
+		}
+		fmt.Println(n)
+	}
 }
