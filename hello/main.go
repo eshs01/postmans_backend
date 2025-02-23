@@ -1,32 +1,17 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-const b string = "suii"
+func vals() (int, int) {
+	return 3, 7
+}
 
 func main() {
-	i := 10
-	for i >= 3 {
-		fmt.Println(i)
-		i = i - 1
-	}
-	for k := 0; k != 5; k++ {
-		fmt.Println(k)
-	}
-	for i := range 3 {
-		fmt.Println("range", i)
-	}
-	for {
-		fmt.Println("loop")
-		break
-	}
 
-	for n := range 6 {
-		if n%2 == 0 {
-			continue
-		}
-		fmt.Println(n)
-	}
+	a, b := vals()
+	fmt.Println(a)
+	fmt.Println(b)
+
+	_, c := vals()
+	fmt.Println(c)
 }
