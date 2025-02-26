@@ -43,6 +43,60 @@ type Data struct {
 	faultcol []int
 }
 
+func checkdata(data Data, rowz []int) {
+	if data.sc_no == nil {
+		fmt.Println("no data found")
+		return
+	}
+	for i := 0; i < len(rowz); i++ {
+		if data.quiz[i] > 30 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 5)
+		}
+
+	}
+	for i := range len(rowz) {
+		if data.labtest[i] > 60 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 7)
+		}
+
+	}
+	for i := range len(rowz) {
+		if data.midsem[i] > 75 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 6)
+		}
+
+	}
+	for i := range len(rowz) {
+		if data.welabs[i] > 30 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 8)
+		}
+
+	}
+	for i := range len(rowz) {
+		if data.precomp[i] > 195 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 9)
+		}
+
+	}
+	for i := range len(rowz) {
+		if data.compre[i] > 105 {
+			data.faultrow = append(data.faultrow, i)
+			data.faultcol = append(data.faultcol, 10)
+		}
+
+	}
+	for i := range len(rowz) {
+		data.faultrow = append(data.faultrow, i)
+		data.faultcol = append(data.faultcol, 11)
+	}
+
+}
+
 func parseInt(value string) (int, error) {
 	if value == "" {
 		return 0, nil
@@ -71,6 +125,7 @@ func main() {
 	data := Data{}
 	rows, err := f.GetRows("Sheet1")
 	check(err)
+	var rowz = make([]int, len(rows)-1)
 
 	for i, row := range rows {
 		if i == 0 {
@@ -120,7 +175,11 @@ func main() {
 		data.compre = append(data.compre, compre)
 		data.total = append(data.total, total)
 
+		rowz[i] = i + 1
 	}
+
+	checkdata(data, rowz)
+
 	fmt.Printf("Faulty Rows: %v\n", data.faultrow)
 	fmt.Printf("Faulty Columns: %v\n", data.faultcol)
 
