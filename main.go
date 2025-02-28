@@ -14,7 +14,7 @@ import (
 func check(e error) {
 	if e != nil {
 		fmt.Println(e)
-		return
+		os.Exit(1) // to stop the code from running
 	}
 
 }
@@ -52,6 +52,7 @@ func checkdata(data Data, rowz []int) {
 		if data.quiz[i] > 30 {
 			data.faultrow = append(data.faultrow, i)
 			data.faultcol = append(data.faultcol, 5)
+
 		}
 
 	}
@@ -109,23 +110,114 @@ func parseFloat(value string) (float64, error) {
 	}
 	return strconv.ParseFloat(value, 64)
 }
+func quizavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.quiz[i]
+	}
+
+	return sum / float64(j)
+}
+func labavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.labtest[i]
+	}
+
+	return sum / float64(j)
+}
+func midsemavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.midsem[i]
+	}
+
+	return sum / float64(j)
+}
+func labtestavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.labtest[i]
+	}
+
+	return sum / float64(j)
+}
+func compreavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.compre[i]
+	}
+
+	return sum / float64(j)
+}
+func totalavg(data Data, j int) float64 {
+	if j == 0 {
+		return 0
+	}
+
+	var sum float64
+	for i := 0; i < j; i++ {
+		sum += data.total[i]
+	}
+
+	return sum / float64(j)
+}
+func topthree(data Data) []float64 {
+	a := make([]float64, len(data.total))
+	copy(a, data.total)
+	for i := 0; i < len(data.total); i++ {
+		for j := i + 1; j < len(data.total); j++ {
+			if a[i] < a[j] {
+				a[i], a[j] = a[j], a[i]
+			}
+		}
+	}
+	return a[:3]
+
+}
+
 func main() {
 
-	dat, err := os.ReadFile("/tmp/dat")
-	check(err)
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run main.go <file_path>")
+		os.Exit(1)
+	}
 
-	f, err := excelize.OpenFile(string(dat))
+	filePath := os.Args[1]
+	f, err := excelize.OpenFile(filePath)
 	check(err)
 	defer func() {
 
-		if err := f.Close(); err != nil {
-			fmt.Println(err)
+		if cerr := f.Close(); cerr != nil {
+			fmt.Println(cerr)
 		}
 	}()
 	data := Data{}
 	rows, err := f.GetRows("Sheet1")
 	check(err)
 	var rowz = make([]int, len(rows)-1)
+	//var totals = make([]float64, len(rows)-1)
+	var j float64 = 0.0
 
 	for i, row := range rows {
 		if i == 0 {
@@ -176,11 +268,11 @@ func main() {
 		data.total = append(data.total, total)
 
 		rowz[i] = i + 1
+		j = float64(i + 1)
 	}
 
 	checkdata(data, rowz)
 
-	fmt.Printf("Faulty Rows: %v\n", data.faultrow)
-	fmt.Printf("Faulty Columns: %v\n", data.faultcol)
+	fmt.Printf("Faulty Rows: %v\n,Faulty Columns: %v\n", data.faultrow, data.faultcol)
 
 }
