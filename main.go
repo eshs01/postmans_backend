@@ -195,6 +195,131 @@ func topthree(data Data) []float64 {
 	return a[:3]
 
 }
+func branchavg(data Data) float64 {
+	var code string
+	var count float64 = 0
+	fmt.Println("enter the branch code")
+	fmt.Scanln(&code)
+	var sum float64 = 0.0
+	switch code {
+	case "A7":
+
+		for i := 0; i < len(data.total); i++ {
+			if data.campusid[5] == "7" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A8":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "8" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "AA":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "A" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "AD":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "D" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A2":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "2" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A3":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "3" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A1":
+
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "1" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A4":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "4" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "A5":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[5] == "2" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "B1":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[4] == "B" && data.campusid[5] == "1" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+
+	case "B5":
+		var sum float64 = 0.0
+		for i := 1; i <= len(data.total); i++ {
+			if data.campusid[4] == "B" && data.campusid[5] == "5" {
+				sum = sum + data.total[i]
+				count++
+			}
+
+		}
+	default:
+		fmt.Println("Please enter a valid code.")
+		return 0.0
+	}
+
+	return sum / float64(count)
+
+}
 
 func main() {
 
